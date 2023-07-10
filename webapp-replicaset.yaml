@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: webapp-replicaset
+  labels:
+    app: employees
+    version: v1
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+        app: employees
+        version: v1
+  template:
+    metadata:
+      labels:
+          app: employees
+          version: v1
+    spec:
+      containers:
+      - image: 737372589521.dkr.ecr.us-east-1.amazonaws.com/assignment2-repo:application-v0.1
+        name: web-app-pod
+        ports:
+        - containerPort: 8080
+        env:
+        - name: DBHOST
+          value: 10.244.0.5
+        - name: DBPORT
+          value: "3306"
+        - name: DBPWD
+          value: "assignment2"

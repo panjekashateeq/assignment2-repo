@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webapp-deployment
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: employees
+      version: v2
+  template:
+    metadata:
+      labels:
+        app: employees
+        version: v2
+    spec:
+      containers:
+      - image: 737372589521.dkr.ecr.us-east-1.amazonaws.com/assignment2-repo-version2:application-v0.1
+        name: web-app-pod2
+        ports:
+        - containerPort: 8080
+        env:
+        - name: DBHOST
+          value: 10.244.0.5
+        - name: DBPORT
+          value: "3306"
+        - name: DBPWD
+          value: "assignment2"
